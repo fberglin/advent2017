@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Data::Dumper;
+# Initialization
 
 $input = 347991;
 
@@ -14,45 +14,44 @@ $heading = 2;
 
 %grid = ();
 
+# Main program begins here
+#-------------------------------------------------------------------------------
+
 for $p (1 ... $input) {
-  # print "Putting $p into $x,$y\n";
   $grid{"$x,$y"} = $p;
 
   if (isItPossibleToTurnLeft()) {
     turnLeft();
-    # print "Currently facing: $headings[$heading]\n";
   }
-  step();
-  # print "Currently standing at: $x,$y\n";
+  moveOneStep();
 }
 
 print "Total distance from center: ", abs($x) + abs($y) - 1, "\n";
 
+# Main program ends here
+#-------------------------------------------------------------------------------
+
 sub turnLeft(@) {
-  $heading = getNextHeading($heading);
+  $heading = getNewHeadingAfterRotateLeft();
+}
+
+sub moveOneStep(@) {
+  ($x, $y) = getNextStep($heading);
 }
 
 sub isItPossibleToTurnLeft(@) {
-  $newHeading = getNextHeading();
+  $newHeading = getNewHeadingAfterRotateLeft();
   ($newX, $newY) = getNextStep($newHeading);
   $newPosition = "$newX,$newY";
   if (not defined($grid{$newPosition})) {
-    # print "$newPosition is free\n";
     return 1;
   } else {
-    # print "$newPosition is blocked by $grid{$newPosition}\n";
     return 0;
   }
 }
 
-sub getNextHeading(@) {
+sub getNewHeadingAfterRotateLeft(@) {
   return ($heading + 1) % 4;
-}
-
-sub step(@) {
-  # print "Moving from $x,$y to ";
-  ($x, $y) = getNextStep($heading);
-  # print "$x,$y\n";
 }
 
 sub getNextStep(@) {
@@ -69,13 +68,6 @@ sub getNextStep(@) {
     $newY++;
   }
 
-  # print "Heading: $headings[$myHeading], New coordinate: $newX,$newY\n";
-
   return ($newX, $newY);
 }
-
-for $key (keys (%grid)) {
-  # print "$key => $grid{$key}\n";
-}
-
 

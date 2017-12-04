@@ -18,12 +18,11 @@ $y = 0;
 
 for $p (1 ... $input) {
   $value = calculateSumOfNeighbours();
-  print "Putting $value into $x,$y\n";
   $grid{"$x,$y"} = $value;
 
   if ($value > $input) {
     print "First value greater than input: $value\n";
-    last;
+    exit;
   }
 
   if (isItPossibleToTurnLeft()) {
