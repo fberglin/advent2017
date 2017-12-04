@@ -53,10 +53,8 @@ sub isItPossibleToTurnLeft(@) {
   ($newX, $newY) = getNextStep($newHeading);
   $newPosition = "$newX,$newY";
   if (not defined($grid{$newPosition})) {
-    # print "$newPosition is free\n";
     return 1;
   } else {
-    # print "$newPosition is blocked by $grid{$newPosition}\n";
     return 0;
   }
 }
@@ -66,9 +64,7 @@ sub getNextHeading(@) {
 }
 
 sub step(@) {
-  # print "Moving from $x,$y to ";
   ($x, $y) = getNextStep($heading);
-  # print "$x,$y\n";
 }
 
 sub getNextStep(@) {
@@ -85,13 +81,7 @@ sub getNextStep(@) {
     $newY++;
   }
 
-  # print "Heading: $headings[$myHeading], New coordinate: $newX,$newY\n";
-
   return ($newX, $newY);
-}
-
-for $key (keys (%grid)) {
-  # print "$key => $grid{$key}\n";
 }
 
 
