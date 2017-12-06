@@ -8,7 +8,7 @@ open($fh, "< 6.input") || die "Unable to open file: $!\n";
 # @input = ( 0, 2, 7, 0 );
 
 $key = join(",", @input);
-print $key, "\n";
+print ">> $key\n";
 
 $iterations = 0;
 %allocation = ( $key => 0 );
@@ -17,6 +17,9 @@ while (1) {
   $iterations++;
 
   ($highestIndex, $highestValue) = findHighestValue(@input);
+
+  $key = join(",", @input);
+  print "$iterations: $key: $highestIndex: $highestValue\n";
 
   # print "High: $highestIndex, $highestValue\n";
 
@@ -32,8 +35,8 @@ while (1) {
   print "$iterations: $key\n";
 
   if (defined($allocation{$key})) {
-    print "Key: '$key' was last seen at iteration: $allocation{$key}\n";
-    print "Iterations since last seen ", $iterations - $allocation{$key}, "\n";
+    print "Allocation '$key' was last seen at iteration: $allocation{$key}\n";
+    print "Iterations since allocation was last seen: ", $iterations - $allocation{$key}, "\n";
     last;
   } else {
     $allocation{$key} = $iterations;
